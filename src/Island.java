@@ -1,23 +1,23 @@
 public class Island {
-    private Cell[][] grid;
+    private Cell[][] model;
     private int width;
     private int height;
 
     public Island(int width, int height) {
         this.width = width;
         this.height = height;
-        this.grid = new Cell[width][height];
+        this.model = new Cell[width][height];
 
-        // Заполняем остров клетками
+
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                grid[i][j] = new Cell(10);  // Допустим, каждая клетка может содержать до 10 животных
+                model[i][j] = new Cell(20);
             }
         }
     }
 
     public Cell getCell(int x, int y) {
-        return grid[x][y];
+        return model[x][y];
     }
 
     public int getWidth() {
@@ -29,22 +29,15 @@ public class Island {
     }
 
     public void moveAnimal(Animal animal, int oldX, int oldY, int newX, int newY) {
-        // Получаем текущую и новую клетку
-        Cell currentCell = grid[oldX][oldY];
-        Cell newCell = grid[newX][newY];
-
-        // Удаляем животное из текущей клетки
+        Cell currentCell = model[oldX][oldY];
+        Cell newCell = model[newX][newY];
         currentCell.getAnimals().remove(animal);
-
-        // Проверяем, есть ли место в новой клетке для добавления животного
         if (newCell.getFreeSpace() > 0) {
-            // Добавляем животное в новую клетку
             newCell.addAnimal(animal);
         } else {
-            // Если на новой клетке нет места, животное остается на старой клетке
             currentCell.addAnimal(animal);
-            System.out.println("Не удалось переместить " + animal + " из-за отсутствия места на клетке (" + newX + ", " + newY + ")");
         }
     }
+
 
 }
